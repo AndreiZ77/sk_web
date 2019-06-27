@@ -8,4 +8,4 @@ cd /home/box/web && sudo gunicorn -b 0.0.0.0:8080 hello:app &
 #cd /home/box/web && sudo gunicorn -c /home/box/web/etc/gunicorn.py hello:app
 
 # settings for mysql
-sudo /etc/init.d/mysql start
+#sudo /etc/init.d/mysql start
