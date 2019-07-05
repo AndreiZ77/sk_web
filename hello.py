@@ -5,6 +5,7 @@ def app(environ, start_response):
     body = environ['QUERY_STRING'].split('&')
     body = '\n'.join(body)
     body = bytes(body, encoding='utf-8')
-    ##"\n".join(environ.get('QUERY_STRING').split("&"))
+    #1# "\n".join(environ.get('QUERY_STRING').split("&"))
+    #2# m = [bytes(i + '\n', 'ascii') for i in data.split('&')]
     start_response(status, headers)
     return [body]
