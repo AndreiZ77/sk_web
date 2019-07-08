@@ -5,7 +5,7 @@ urlpatterns = [
     #home page
     path('', views.test, name='test'),
     path('login/', views.test, name='test'),
-    path('singup/', views.test, name='test'),
+    path('signup/', views.test, name='test'),
     path('question/<int:q_id>/', views.test, name='test'),
     path('ask/', views.test, name='test'),
     path('popular/', views.test, name='test'),
