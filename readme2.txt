@@ -19,6 +19,10 @@
 curl http://127.0.0.1/hello/?a=bcd
 curl http://127.0.0.1/question/123/
 
+python -c "import django; print(django.get_version())"
+$pip freeze | grep Django
+Django==1.4.3
+
 =====
 @Anonymous_15370114 из предыдущей задачи я с таким конфигом смог запустить - может поможет:
 CONFIG = {

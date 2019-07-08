@@ -4,7 +4,8 @@ sudo /etc/init.d/nginx restart
 
 # gunicorn
 #sudo ln -s /home/box/web/etc/gunicorn.py /etc/gunicorn.d/gunicorn.py
-cd /home/box/web && sudo gunicorn -b 0.0.0.0:8080 hello:app &
+#cd /home/box/web && sudo gunicorn -b 0.0.0.0:8080 hello:app &
+#cd /home/box/web/ask && sudo gunicorn -b 0.0.0.0:8000 ask.wsgi:app &
 cd /home/box/web/ask && sudo gunicorn -bind=0.0.0.0:8000 --workers=2 --timeout=15 ask.wsgi:app &
 
 #sudo gunicorn -c /home/box/web/etc/gunicorn.conf hello:wsgi_application
