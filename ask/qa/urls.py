@@ -11,3 +11,9 @@ urlpatterns = [
     path('popular/', views.test, name='test'),
     path('new/', views.test, name='test'),
 ]
+
+
+"""
+url(r'^category/(\d+)/$', 'category_view') # захватывается позиционная переменная
+url(r'^(?P<pk>\d+)/$', 'post_detail')  # задает имя переменной куда попадет значение
+"""

@@ -75,8 +75,8 @@ Bakytzhan Bektugan
 
 4) Судя по комментариям многие настраивают Gunicorn через конфигурационные файлы. По документации это должно быть
 обычным python файлом. Для Django я написал django_conf.py, и добавил в init.sh:
-sudo ln -sf /home/box/web/etc/django_conf.py /etc/gunicorn.d/django_conf.py
-sudo gunicorn -c /etc/gunicorn.d/django_conf.py ask.wsgi:application
+  sudo ln -sf /home/box/web/etc/django_conf.py /etc/gunicorn.d/django_conf.py
+  sudo gunicorn -c /etc/gunicorn.d/django_conf.py ask.wsgi:application
 Старый hello.py я просто удалил.
 
 5) Про nginx написано достаточно. Там просто надо настроить location /.
