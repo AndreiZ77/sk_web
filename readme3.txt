@@ -9,6 +9,9 @@ class QuestionManager(models.Manager):
 class Question(models.Model):
         objects = QuestionManager()
 
+***
+python manage.py makemigrations qa
+python manage.py migrate qa
 
 *** Andrey Shatilov 2 года назад Ссылка
 Если хотите нормальной работы python3 с mysql и у вас при установке django mysqlclient были вот такие оишбки:
@@ -96,3 +99,36 @@ gunicorn -b 0.0.0.0:8000 ask.wsgi:application&
 python manage.py makemigrations qa
 ﻿После этого использовал команду
 python manage.py migrate
+
+***
+Maxim Lyubetskiy
+3 года назад
+Ссылка
+Чтобы не мучаться с старой версией можно новую поставить для python3
+sudo pip3 install django
+sudo pip3 install gunicorn
+sudo apt-get install python3-dev libmysqlclient-dev
+sudo pip3 install mysqlclient
+гуникорн потом только запускать надо через  /usr/local/bin/gunicorn
+@Maxim_Lyubetskiy Я просто снёс старую версию django с помощью apt-get remove python-django и установил новую
+с помощью pip. Лень было путь к gunicorn в /etc/init.d/gunicorn править.
+Леонид Васильев
+Я бы добавил вначале sudo apt-get update, без этого последние 2 пакета не ставятся
+
+*** Дмитрий Макаров - 3 года назад
+@Дмитрий_Анацкий  не, проверил, достаточно 2х команд:
+mysql -uroot -e "CREATE DATABASE stepic_web;"
+mysql -uroot -e "GRANT ALL PRIVILEGES ON stepic_web.* TO 'box'@'localhost' WITH GRANT OPTION;"
+после этого доступ к базе есть и show grants показывает правильные привилегии
+
+***
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mydb',
+        'USER': 'root',
+        'PASSWD': 'mypass',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
