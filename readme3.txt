@@ -1,3 +1,23 @@
+2
+что бы не было головной боли у вас:
+virtualenv -p python3 myvenv
+source myvenv/bin/activate
+pip install --upgrade pip
+pip install django
+pip install gunicorn
+После этого можно стартовать gunicorn:
+cd /home/box/web/ask
+gunicorn --bind=0.0.0.0:8000 --workers=2 --timeout=15 --log-level=debug ask.wsgi:application
+1
+git clone https://github.com/AndreiZ77/sk_web.git /home/box/web
+chmod a+x init.sh
+bash /home/box/web/init.sh
+3
+в ВС python manage.py makemigrations имяПриложения   - определяем, как изминить БД для хранения инфы новых моделей
+в ВС python manage.py migrate   - теперь применяем миграцию к БД
+
+
+
 ***
 В результате я добавил класс  в модель  (home/box/web/ask/qa/model.py)
 class QuestionManager(models.Manager):
@@ -88,7 +108,8 @@ gunicorn -b 0.0.0.0:8000 ask.wsgi:application&
 6. Проверка:
 ﻿curl localhost:8000﻿
 Получаем ok.
-Что-то опущено (миграции и т.п.). ﻿И не через init.sh. ﻿Но мне бы хоть к отладке приступить по существу задачи, а не из-за проблем с запуском собственно Джанги.
+Что-то опущено (миграции и т.п.). ﻿И не через init.sh. ﻿Но мне бы хоть к отладке приступить по существу задачи,
+а не из-за проблем с запуском собственно Джанги.
 В результате﻿ получаю свою ошибку, о которой писал выше.
 
 *** Iurii Chudnov -   3 года назад
