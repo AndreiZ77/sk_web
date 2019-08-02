@@ -1,16 +1,3 @@
-
-<nav><ul class="pagination">
-{% for p in paginator.page_range %}
-  {% if p == page.number %}
-  <li class="active">
-  {% else %}
-  <li>
-  {% endif %}
-    <a href="{{ paginator.baseurl }}{{ p }}">{{ p }}</a>
-  </li>
-{% endfor %}
-</ul></nav>
-
 *** Виталий Мурысев 9 месяцев назад
 Failed test #6. answer text is not found on question page http://10.42.9.242/question/3141592/
 ﻿Помимо всего прочего, в модели Answer (!!!) на добавить к полю added_at возможность Null=True.
@@ -28,7 +15,8 @@ Failed test #6. answer text is not found on question page http://10.42.9.242/que
 
 *** Anonymous 15955996 год назад
 Первая задача приближенная к "боевой". Потратил почти неделю, конечно не каждый день. Пересмотрел лекции.
-Сделал на python3 и djanho 2.0.7. База -- sqlite. Старый конфиг с nginx, пробрасывающий с 80 на 8000 порт использовался, поэтому runserver был на 8000 порту.
+Сделал на python3 и djanho 2.0.7. База -- sqlite. Старый конфиг с nginx, пробрасывающий с 80 на 8000 порт использовался,
+поэтому runserver был на 8000 порту.
 Для тестов на своей машине использовал django-seed. Упомянутый ранее autfixture не совместим с Django 2.0.
 
 *** Сергей Иванов -2 года назад

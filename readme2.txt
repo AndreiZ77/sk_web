@@ -23,6 +23,44 @@ python -c "import django; print(django.get_version())"
 $pip freeze | grep Django
 Django==1.4.3
 
+====
+web/etc/gunicorn_wsgi.conf
+CONFIG = {
+  'mode': 'wsgi',
+  'working_dir': '/home/box/web/ask',
+  'python': '/usr/bin/python3',
+  'args': (
+    '--bind=0.0.0.0:8080',
+    '--workers=2',
+    '--timeout=15',
+    '--log-level=debug',
+    'ask.wsgi:app'
+  )
+}
+
+web/etc/nginx.conf
+server {
+
+  listen 80 default;
+
+  location ^~ /uploads/ {
+    root /home/box/web;
+  }
+
+  location ~* ^.+\.\w+$ {
+    root /home/box/web/public;
+  }
+
+  location /hello/ {
+    proxy_pass http://127.0.0.1:8080;
+  }
+
+  location / {
+    return 404;
+  }
+
+}
+
 =====
 Долго возился с тестом 4, но все-таки решил.
 При запуске init.sh nginx с командой - sudo /etc/init.d/nginx restart - крашился и не запускался.
