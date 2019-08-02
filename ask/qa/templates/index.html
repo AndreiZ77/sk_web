@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <style>
+    ul.pagination {
+      margin: 0; /* Обнуляем значение отступов */
+      padding: 4px; /* Значение полей */
+    }
+    ul.pagination li {
+      display: inline; /* Отображать элементы в строку */
+      margin-right: 5px; /* Отступ слева */
+      /* border: 1px solid #000; Рамка вокруг текста */
+      /* padding: 3px; Поля вокруг текста */
+    }
+    </style>
+</head>
+<body>
+
+<h1> Questions list: </h1>
+
+<nav><ul class="pagination">
+{% for p in paginator.page_range %}
+  {% if p == page.number %}
+  <li class="active">
+  {% else %}
+  <li>
+  {% endif %}
+    <a href="{{ paginator.baseurl }}{{ p }}">{{ p }}</a>
+  </li>
+{% endfor %}
+</ul></nav>
+
+{% for question in questions %}
+<h3> [{{question.added_at}}] {{question.author}} : {{question.text}}  </h3>
+{% endfor %}
+
+</body>
+</html>
