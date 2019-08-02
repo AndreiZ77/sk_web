@@ -33,7 +33,8 @@
 </ul></nav>
 
 {% for question in questions %}
-<h3> [{{question.added_at}}] {{question.author}} : {{question.text}}  </h3>
+<h3> [{{question.added_at}}] {{question.author}} : <a href="{{ question.get_url }}">{{question.text}}</a>  </h3>
+
 {% endfor %}
 
 </body>
