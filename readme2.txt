@@ -24,6 +24,33 @@ $pip freeze | grep Django
 Django==1.4.3
 
 =====
+Долго возился с тестом 4, но все-таки решил.
+При запуске init.sh nginx с командой - sudo /etc/init.d/nginx restart - крашился и не запускался.
+Запускалось, если прописать в инит.сш вместо этой строки - sudo nginx -c /etc/nginx/sites-enabled/test.conf.
+Далее nginx стартует, но выдает ошибки по типу "server" not allowed.
+Решил проблему дописыванием в свой nginx.conf следующей структуры:
+
+user www-data;
+worker_processes 4;
+pid /run/nginx.pid;
+
+events {
+       worker_connections 768;
+}
+
+http {
+      server {
+        Здесь ваши настройки сервера
+     }
+}
+
+
+И еще по проверке на работоспособность:
+curl -vv 127.0.0.1:8080/?a=b - запрос отправляется напрямую к gunicorn
+curl -vv 127.0.0.1/hello/?a=b - проверяем работает и проксирует ли nginx
+
+
+=====
 @Anonymous_15370114 из предыдущей задачи я с таким конфигом смог запустить - может поможет:
 CONFIG = {
     'mode': 'wsgi',
@@ -56,7 +83,6 @@ pip install gunicorn
 cd /home/box/web/ask
 gunicorn --bind=0.0.0.0:8000 --workers=2 --timeout=15 --log-level=debug ask.wsgi:application
 
-
 =====
 Bakytzhan Bektugan
 год назад
@@ -79,4 +105,4 @@ Bakytzhan Bektugan
   sudo gunicorn -c /etc/gunicorn.d/django_conf.py ask.wsgi:application
 Старый hello.py я просто удалил.
 
-5) Про nginx написано достаточно. Там просто надо настроить location /.
+5)Про nginx написано достаточно. Там просто надо настроить location /.
