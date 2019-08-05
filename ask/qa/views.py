@@ -2,14 +2,14 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
-from .models import Question, Answer
+from .models import *
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
 
 @require_GET
-def question_details(request, q_id):
-    question = get_object_or_404(Question, id=q_id)
+def question_details(request, id):
+    question = get_object_or_404(Question, id=id)
     answers = question.answer_set.order_by('added_at')
     context = {'question':question, 'answers': answers}
     return  render(request, 'question.html', context)
