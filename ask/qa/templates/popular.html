@@ -34,7 +34,7 @@
 
 {% for question in questions %}
 <h2> rating:{{question.rating}} </h2>
-<h3> [{{question.added_at}}] <a href="{{ question.get_url }}">{{question.author}} : {{question.text}}</a>  </h3>
+<h3> [{{question.added_at}}] <a href="{{ question.get_url }}">{{question.author}} - {{question.title}}: {{question.text}}</a>  </h3>
 {% endfor %}
 
 </body>
