@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title%}Вопросы и ответы - {% endblock %}</title>
+        {% block meta %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block content %}
+        <nav class="navigation">
+            <a href="/ask/">Спросить</a> |
+            <a href="/">Новое</a> |
+            <a href="/popular/">Популярное</a> |
+            <a href="/signup/">Регистрация</a> |
+            {% if not request.user.is_anonymous %}
+            Текущий пользователь:
+            {{ request.user }}
+            <a href="/logout/">Выйти</a>
+            {% else %}
+            <a href="/login/">Войти</a>
+            {% endif %}
+        </nav>
+        <h1>{{ title }}</h1>
+        {% endblock %}
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>
