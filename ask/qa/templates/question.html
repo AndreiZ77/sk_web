@@ -1,17 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Question</title>
-</head>
-<body>
-
+{% extends 'base.html' %}
+{% block title %}
+{{ block.super }} Вопрос: {{ page }}
+{% endblock %}
+{% block content %}
+{{ block.super }}
 <h1>{{question.title}} - {{question.author}} ({{question.added_at}})</h1>
 <h2>{{question.text}}</h2>
 {% for answer in answers %}
 <h3> {{answer.text}} </h3>
 {% endfor %}
+{% include "_form.html" %}
+{% endblock %}
 
 
-</body>
-</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Question</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<h1>{{question.title}} - {{question.author}} ({{question.added_at}})</h1>-->
+<!--<h2>{{question.text}}</h2>-->
+<!--{% for answer in answers %}-->
+<!--<h3> {{answer.text}} </h3>-->
+<!--{% endfor %}-->
+
+<!--</body>-->
+<!--</html>-->

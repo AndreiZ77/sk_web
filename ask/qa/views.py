@@ -1,18 +1,45 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 from .models import *
+from .forms import *
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
 
+# {% include "_form.html" %}
+def ask(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            form._user = request.user
+            question = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'ask.html', {'form':form})
+
+
 @require_GET
-def question_details(request, id):
+def question(request, id):
     question = get_object_or_404(Question, id=id)
     answers = question.answer_set.order_by('added_at')
-    context = {'question':question, 'answers': answers}
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            form._user = request.user
+            _ = form.save()
+            #question = form.question
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AnswerForm(initial = {'question': question.id})
+    context = {'question':question, 'answers': answers, 'form': form}
     return  render(request, 'question.html', context)
+
 
 def paginate(request, qs):
     try:
@@ -71,7 +98,9 @@ def question_by_rating(request):
 
 
 
-# # /blog/post_text/?id=123
+
+#====================================================================
+# /blog/post_text/?id=123
 # def post_text(request):
 #     try:
 #         id = request.GET.get('id')

@@ -16,7 +16,7 @@ bash /home/box/web/init.sh
 в ВС python manage.py makemigrations имяПриложения   - определяем, как изминить БД для хранения инфы новых моделей
 в ВС python manage.py migrate   - теперь применяем миграцию к БД
 
-
+curl localhost:8000
 
 ***
 В результате я добавил класс  в модель  (home/box/web/ask/qa/model.py)
