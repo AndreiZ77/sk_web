@@ -23,8 +23,11 @@ def ask(request):
     return render(request, 'ask.html', {'form':form})
 
 
-@require_GET
 def question(request, id):
+    # try:
+    #     question = Question.objects.get(id=id)
+    # except Question.DoesNotExist:
+    #     raise Http404
     question = get_object_or_404(Question, id=id)
     answers = question.answer_set.order_by('added_at')
     if request.method == "POST":
