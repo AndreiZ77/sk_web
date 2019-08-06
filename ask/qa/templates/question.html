@@ -7,7 +7,7 @@
 <h1>{{question.title}} - {{question.author}} ({{question.added_at}})</h1>
 <h2>{{question.text}}</h2>
 {% for answer in answers %}
-<h3> {{answer.text}} </h3>
+<h3> {{answer.text}} ({{answer.author}})</h3>
 {% endfor %}
 {% include "_form.html" %}
 {% endblock %}
