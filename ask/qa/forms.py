@@ -6,6 +6,8 @@ from .models import Question, Answer
 class AskForm(forms.Form):
     title = forms.CharField(max_length=100)
     text = forms.CharField(widget=forms.Textarea)
+    def clean(self):
+        return self.cleaned_data
     def clean_title(self):
         title = self.cleaned_data['title']
         if title.strip() == '':
@@ -16,16 +18,17 @@ class AskForm(forms.Form):
         if text.strip() == '':
             raise forms.ValidationError('Поле вопроса пустое', code='validation_error')
         return text
-    # def clean_author(self):
-    #     author = self.cleaned_data['author']
-    #     user = User.objects.get(id=author)
-    #     return user
+    def clean_author(self):
+        author = self.cleaned_data['author']
+        user = User.objects.get(id=author)
+        return user
     def save(self):
         question = Question(**self.cleaned_data)
-        if self._user.id>=0:
-            question.author_id = self._user.id
-        else:
-            question.author_id = 1
+        question.author_id = User.objects.get(pk=1)
+        # if self._user.id>=0:
+        #     question.author_id = self._user.id
+        # else:
+        #     question.author_id = 1
         question.save()
         return question
 
@@ -47,11 +50,17 @@ class AnswerForm(forms.Form):
             raise forms.ValidationError('Неверный id вопроса', code='validation_error')
         return question
 
+    def clean_author(self):
+        author = self.cleaned_data['author']
+        user = User.objects.get(id=author)
+        return user
+
     def save(self):
         answer = Answer(**self.cleaned_data)
-        if self._user.id >= 0:
-            answer.author_id = self._user.id
-        else:
-            answer.author_id = 1
+        answer.author_id = User.objects.get(pk=1)
+        # if self._user.id >= 0:
+        #     answer.author_id = self._user.id
+        # else:
+        #     answer.author_id = 1
         answer.save()
         return answer
