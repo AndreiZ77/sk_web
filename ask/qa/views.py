@@ -3,13 +3,14 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
+from django.db.models import ObjectDoesNotExist
 from .models import *
-from .forms import *
+from .forms import AskForm, AnswerForm
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
 
-# {% include "_form.html" %}
+
 def ask(request):
     if request.method == "POST":
         form = AskForm(request.POST)
@@ -35,13 +36,14 @@ def question(request, id):
         if form.is_valid():
             form._user = request.user
             _ = form.save()
-            #question = form.question
             url = question.get_url()
             return HttpResponseRedirect(url)
     else:
         form = AnswerForm(initial = {'question': question.id})
     context = {'question':question, 'answers': answers, 'form': form}
     return  render(request, 'question.html', context)
+
+
 
 
 def paginate(request, qs):
