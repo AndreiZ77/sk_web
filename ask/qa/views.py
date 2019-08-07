@@ -12,7 +12,6 @@ def test(request, *args, **kwargs):
 
 
 def ask(request):
-
     if request.method == "POST":
         form = AskForm(request.POST)
         if form.is_valid():
@@ -30,7 +29,6 @@ def question(request, id):
     #     question = Question.objects.get(id=id)
     # except Question.DoesNotExist:
     #     raise Http404
-
     question = get_object_or_404(Question, id=id)
     answers = question.answer_set.order_by('added_at')
     if request.method == "POST":
