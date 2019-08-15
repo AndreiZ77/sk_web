@@ -3,12 +3,53 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
+from django.contrib.auth import authenticate, login as dologin, logout as dologout
 from django.db.models import ObjectDoesNotExist
 from .models import *
-from .forms import AskForm, AnswerForm
+from .forms import *
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
+
+def logout(request):
+    if request.user is not None:
+        dologout(request)
+        return HttpResponseRedirect('/')
+
+def login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    dologin(request, user)
+            return HttpResponseRedirect('/')
+    else:
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form,
+                                              'user': request.user,
+                                              'session': request.session, })
+
+
+def signup(request):
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            #email = form.cleaned_data['email']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    dologin(request, user)
+            return HttpResponseRedirect('/')
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {'form':form})
 
 
 def ask(request):
@@ -35,7 +76,7 @@ def question(request, id):
         form = AnswerForm(request.POST)
         if form.is_valid():
             form._user = request.user
-            _ = form.save()
+            answer = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
     else:
