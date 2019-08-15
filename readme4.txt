@@ -1,3 +1,8 @@
+***
+import base64
+base64.b64encode(b'user123:pass321')
+b'dXNlcjEyMzpwYXNzMzIx'
+
 *** Виталий Мурысев 9 месяцев назад
 Failed test #6. answer text is not found on question page http://10.42.9.242/question/3141592/
 ﻿Помимо всего прочего, в модели Answer (!!!) на добавить к полю added_at возможность Null=True.
