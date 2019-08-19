@@ -14,7 +14,7 @@ def test(request, *args, **kwargs):
 def logout(request):
     if request.user is not None:
         dologout(request)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(request.GET.get('next','/'))
 
 def login(request):
     if request.method == "POST":
@@ -35,21 +35,37 @@ def login(request):
 
 
 def signup(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            #email = form.cleaned_data['email']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    dologin(request, user)
-            return HttpResponseRedirect('/')
+            user = form.save(request)
+            if user != None:
+                resp = HttpResponseRedirect('/')  # Replace to request.next
+                return resp
     else:
         form = SignupForm()
-    return render(request, 'signup.html', {'form':form})
+
+    return render(request, 'signup.html', {
+        'form': form,
+    })
+
+# def signup(request):
+#     if request.method == "POST":
+#         form = SignupForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             username = form.cleaned_data['username']
+#             password = form.raw_passwrd
+#             user = authenticate(username=username, password=password)
+#             if user is not None:
+#                 if user.is_active:
+#                     dologin(request, user)
+#             return HttpResponseRedirect('/')
+#     else:
+#         form = SignupForm()
+#     return render(request, 'signup.html', {'form': form,
+#                                            'user': request.user,
+#                                            'session': request.session, })
 
 
 def ask(request):
